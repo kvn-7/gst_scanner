@@ -33,6 +33,8 @@ end
 # add this line:
 $iOSVersion = '10.0'
 
+pod 'GoogleMLKit/TextRecognition','2.2.0'
+
 post_install do |installer|
   # add these lines:
   installer.pods_project.build_configurations.each do |config|
