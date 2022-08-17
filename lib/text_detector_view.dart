@@ -51,8 +51,8 @@ class _TextRecognizerViewState extends State<TextRecognizerView> {
       //     inputImage.inputImageData!.size,
       //     inputImage.inputImageData!.imageRotation);
       // _customPaint = CustomPaint(painter: painter);
-      final iReg =
-          RegExp(r'([0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[0-9A-Z]{1})');
+      final iReg = RegExp(
+          r'([0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1})');
       var gstno = iReg
           .allMatches(recognizedText.text)
           .map((e) => e.group(0))
