@@ -53,18 +53,19 @@ class _TextRecognizerViewState extends State<TextRecognizerView> {
       // _customPaint = CustomPaint(painter: painter);
       final iReg = RegExp(
           r'([0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1})');
-      var gstno = iReg
-          .allMatches(recognizedText.text)
-          .map((e) => e.group(0))
-          .toString();
-      if (gstno != '()') {
-        _canProcess = false;
+      var gstno;
+      if (iReg.firstMatch(recognizedText.text) != null) {
+        gstno = iReg.firstMatch(recognizedText.text)!.group(0).toString();
 
-        _textRecognizer.close();
-        gstno = gstno.replaceAll('(', '');
-        gstno = gstno.replaceAll(')', '');
+        if (gstno != 'null') {
+          _canProcess = false;
 
-        navService.pushNamed('/search', args: gstno);
+          _textRecognizer.close();
+          gstno = gstno.replaceAll('(', '');
+          gstno = gstno.replaceAll(')', '');
+
+          navService.pushNamed('/search', args: gstno);
+        }
       }
     } else {
       _text = 'Recognized text:\n\n${recognizedText.text}';
