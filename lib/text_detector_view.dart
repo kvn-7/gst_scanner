@@ -44,34 +44,23 @@ class _TextRecognizerViewState extends State<TextRecognizerView> {
       _text = '';
     });
     final recognizedText = await _textRecognizer.processImage(inputImage);
-    if (inputImage.inputImageData?.size != null &&
-        inputImage.inputImageData?.imageRotation != null) {
-      // final painter = TextRecognizerPainter(
-      //     recognizedText,
-      //     inputImage.inputImageData!.size,
-      //     inputImage.inputImageData!.imageRotation);
-      // _customPaint = CustomPaint(painter: painter);
-      final iReg = RegExp(
-          r'([0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1})');
-      var gstno;
-      if (iReg.firstMatch(recognizedText.text) != null) {
-        gstno = iReg.firstMatch(recognizedText.text)!.group(0).toString();
+    final iReg = RegExp(
+        r'([0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1})');
+    var gstno;
+    if (iReg.firstMatch(recognizedText.text) != null) {
+      gstno = iReg.firstMatch(recognizedText.text)!.group(0).toString();
 
-        if (gstno != 'null') {
-          _canProcess = false;
+      if (gstno != 'null') {
+        _canProcess = false;
 
-          _textRecognizer.close();
-          gstno = gstno.replaceAll('(', '');
-          gstno = gstno.replaceAll(')', '');
+        _textRecognizer.close();
+        gstno = gstno.replaceAll('(', '');
+        gstno = gstno.replaceAll(')', '');
 
-          navService.pushNamed('/search', args: gstno);
-        }
+        navService.pushNamed('/search', args: gstno);
       }
-    } else {
-      _text = 'Recognized text:\n\n${recognizedText.text}';
-      // TODO: set _customPaint to draw boundingRect on top of image
-      _customPaint = null;
     }
+
     _isBusy = false;
     if (mounted) {
       setState(() {});
